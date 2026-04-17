@@ -1,0 +1,21 @@
+import { NavLink } from "react-router-dom"
+
+export const Navbar = () => {
+    return (
+        <nav className="flex justify-between item-center bg-gray-500 text-white px-6 py-4 shadow-md sticky top-0">
+            <h2 className="text-2xl font-bold tracking-wide">MyPosts</h2>
+            <ul className="flex gap-6 text-lg">
+                <li className="cursor-pointer hover:text-teal-400 ">
+                    <NavLink to= "">
+                        Home
+                    </NavLink>
+                </li>
+                <li className="cursor-pointer hover:text-teal-400 ">
+                    <NavLink to="">
+                        Add Post
+                    </NavLink>
+                </li>
+            </ul>
+        </nav>
+    )
+}
