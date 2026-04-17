@@ -1,10 +1,39 @@
 import { useContext, useEffect, useState } from "react"
 import { PostContext } from "../context/Context";
 import { NavLink } from "react-router-dom";
+import { RiEdit2Fill } from "react-icons/ri";
 
 export const AllPosts = () => {
 
-    const { posts, addPost, handleEditPost, editData, updatePost, setEditData, removePost } = useContext(PostContext)
+    const {
+        posts,
+        addPost,
+        handleEditPost,
+        editData,
+        updatePost,
+        setEditData,
+        removePost,
+        handlePrevBtn,
+        handleNextBtn,
+        currentPage,
+        itemsPerPage,
+        setitemsPerPage,
+        handleItemPerPage,
+        currentItems,
+        handleFilterPost,
+        handleSearchPost,
+        setFilterPost,
+        setSearchValue,
+        filterPost,
+        searchValue,
+        handleChangeTitle,
+        setEditTitle,
+        editTitle,
+        updateTitle,
+        users,
+        handleSelectUser
+
+    } = useContext(PostContext)
 
     const [title, setTitle] = useState("")
     const [body, setBody] = useState("")
@@ -16,19 +45,29 @@ export const AllPosts = () => {
         }
     }, [editData])
 
+    useEffect(() => {
+        if (editTitle) {
+            setTitle(editTitle.title || "")
+        }
+    }, [editTitle])
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const postData = { title, body, userId: 1 };
+        const titleData = { title }
 
         if (editData) {
             updatePost(editData.id, postData)
             setEditData({})
-        } else {
+        } if (editTitle) {
+            updateTitle(editTitle.id, titleData)
+            setEditTitle({})
+
+        }
+        else {
 
             addPost({ title, body, userId: 1 })
         }
-
-
         setTitle("")
         setBody("")
     }
@@ -65,10 +104,46 @@ export const AllPosts = () => {
                     </form>
                 </div>
 
-                {posts.map((post) => (
+                <div>
+                    <input className="border p-2 rounded"
+                        type="text"
+                        placeholder="search By Title"
+                        value={filterPost}
+                        onChange={(e) => setFilterPost(e.target.value)}
+                    />
+
+                    <button
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer ml-2"
+                        onClick={handleFilterPost}
+                    >Filter</button>
+
+                    <input className="border p-2 rounded ml-20"
+                        type="text"
+                        placeholder="search"
+                        value={searchValue}
+                        onChange={(e) => setSearchValue(e.target.value)}
+                    />
+                    <button
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer ml-2"
+                        onClick={handleSearchPost}
+                    >search</button>
+                </div>
+                <div>
+                    <select className="inline-flex justify-center gap-x-1.5 border p-2 rounded bg-gray-500 px-3 py-2 text-sm font-semibold inset-ring-1 inset-ring-white/5 hover:bg-white/20 mt-5"
+                    onChange={(e)=>handleSelectUser(e)}
+                    >
+                        {users?.map(item =>
+                            <option key={item.id} value={item.id}>{item.name} - {item.id}</option>
+                        )}
+                    </select>
+                </div>
+
+                {currentItems.map((post) => (
                     <div key={post.id} className="max-w-md mx-auto bg-green-200 shadow-lg rounded-xl p-5 mb-5">
                         <h2 className="text-xl font-bold mb-2 text-gray-800">
                             TITLE: {post.title.substring(0, 12) + ' ...'}
+                            <RiEdit2Fill className="cursor-pointer inline-block ml-3"
+                                onClick={() => handleChangeTitle(post)} />
                         </h2>
 
                         <p className="bg-green-200 text-gray-500 px-4 py-2 rounded-lg hover:bg-green-300">
@@ -91,8 +166,42 @@ export const AllPosts = () => {
                             className="bg-red-500 hover:bg-red-800 text-white font-bold py-2 px-4 rounded cursor-pointer mt-7">
                             DELETE
                         </button>
+                        <NavLink to={`/posts/${post.id}/comments`}>
+                            <button className="bg-gray-400 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded cursor-pointer mt-7">Comments</button>
+                        </NavLink>
                     </div>
                 ))}
+
+
+            </div>
+            <div>
+                <select className="inline-flex justify-center gap-x-1.5 border p-2 rounded bg-white px-3 py-2 text-sm font-semibold text-black inset-ring-1 inset-ring-white/5 hover:bg-white/20"
+                    value={itemsPerPage} onChange={(e) => setitemsPerPage(e.target.value)} onClick={handleItemPerPage}>
+                    <option>Select Posts Page</option>
+                    <option>5</option>
+                    <option>10</option>
+                    <option>15</option>
+                    <option>25</option>
+                    <option>50</option>
+                    <option>100</option>
+                </select>
+
+                <button
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded cursor-pointer"
+                    onClick={handlePrevBtn}>
+                    Prev
+                </button>
+
+                <button className="ml-2 mr-2 rounded cursor-not-allowed bg-white font-bold py-1 px-2">
+                    {currentPage}
+                </button>
+
+                <button
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded cursor-pointer"
+                    onClick={handleNextBtn}>
+                    Next
+                </button>
+
             </div>
         </>
     )
