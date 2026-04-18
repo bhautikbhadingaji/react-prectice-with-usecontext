@@ -36,9 +36,6 @@ export const PostProvider = ({ children }) => {
     // CREATE POST
     const addPost = async (data) => {
         const res = await createPosts(data)
-
-        console.log("data", res.data)
-
         setPosts((prev) => [res.data, ...prev])
     }
 
@@ -86,7 +83,6 @@ export const PostProvider = ({ children }) => {
     const fetchComments = async (id) => {
         const res = await getComments(id)
         setComments(res.data)
-        console.log("comments data", res.data)
     }
 
     useEffect(() => {
@@ -109,7 +105,6 @@ export const PostProvider = ({ children }) => {
     const totalPages = Math.ceil(posts.length / itemsPerPage);
 
     const handlePrevBtn = useCallback(() => {
-        console.log("prev")
         if (currentPage > 1) {
             setCurrentPage(currentPage - 1)
         }
@@ -118,10 +113,7 @@ export const PostProvider = ({ children }) => {
     ])
 
     const handleNextBtn = useCallback(() => {
-        console.log("next")
-
         if (currentPage < totalPages) {
-
             setCurrentPage((prev) => prev + 1)
         } else {
             console.log("can't go next")

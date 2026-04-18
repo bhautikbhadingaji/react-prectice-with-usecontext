@@ -6,13 +6,7 @@ export const CardDetails = () => {
     const { id } = useParams()
     const { posts } = useContext(PostContext);
 
-    console.log("type of id is", typeof (id))
-
-
     const post = posts.find((p) => p.id === Number(id));
-
-
-
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-800">
