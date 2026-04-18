@@ -6,12 +6,12 @@ export const Navbar = () => {
             <h2 className="text-2xl font-bold tracking-wide">MyPosts</h2>
             <ul className="flex gap-6 text-lg">
                 <li className="cursor-pointer hover:text-teal-400 ">
-                    <NavLink to= "">
+                    <NavLink to= "/">
                         Home
                     </NavLink>
                 </li>
                 <li className="cursor-pointer hover:text-teal-400 ">
-                    <NavLink to="">
+                    <NavLink to="/add-post">
                         Add Post
                     </NavLink>
                 </li>

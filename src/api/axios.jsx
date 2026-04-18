@@ -44,3 +44,7 @@ export const getUsers = () => {
 export const getUsersPost = (seletedUser) => {
     return api.get(`/posts?userId=${seletedUser}`)
 }
+
+export const getFilteredComments = (id, FilterComments) => {
+    return api.get(`/posts/${id}/comments?email=${FilterComments}`)
+}

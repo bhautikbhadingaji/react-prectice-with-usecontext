@@ -5,6 +5,7 @@ import { PostProvider } from './context/Context'
 import './index.css'
 import { CardDetails } from './pages/CardDetails'
 import { CommentsPage } from './pages/Comments'
+import { Form } from './components/Form'
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
       <BrowserRouter>
       <Routes>
         <Route path= "/" element={<AllPosts />}/>
+        <Route path= "/add-post" element={<Form />}/>
         <Route path="/posts/:id" element={<CardDetails />}/>
         <Route path="/posts/:id/comments" element={<CommentsPage />} />
       </Routes>

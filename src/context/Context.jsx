@@ -1,6 +1,6 @@
 import { createContext, useCallback, useEffect } from "react"
 import { useState } from "react"
-import { createPosts, deletePost, editPost, editTitlePost, getComments, getFilteredPost, getPosts, getsearchedPost, getUsers, getUsersPost } from "../api/axios";
+import { createPosts, deletePost, editPost, editTitlePost, getComments, getFilteredComments, getFilteredPost, getPosts, getsearchedPost, getUsers, getUsersPost } from "../api/axios";
 
 export const PostContext = createContext();
 
@@ -14,8 +14,7 @@ export const PostProvider = ({ children }) => {
     const [searchValue, setSearchValue] = useState([])
     const [editTitle, setEditTitle] = useState("")
     const [users, setUsers] = useState([])
-
-    console.log("users",users)
+    const [filterComments, setFilterComments] = useState("")
 
 
     // GET POST
@@ -157,6 +156,13 @@ export const PostProvider = ({ children }) => {
         setPosts(res.data)
     }
 
+    //FILTER COMMENTS
+
+    const handleFilterComments = async(id) => {
+const res = await getFilteredComments(id,filterComments)
+setComments(res.data)
+    }
+
     return (
         <PostContext.Provider value={{
             posts,
@@ -187,7 +193,10 @@ export const PostProvider = ({ children }) => {
             editTitle,
             updateTitle,
             users,
-            handleSelectUser
+            handleSelectUser,
+            filterComments,
+            handleFilterComments,
+            setFilterComments
         }}>
             {children}
         </PostContext.Provider>
