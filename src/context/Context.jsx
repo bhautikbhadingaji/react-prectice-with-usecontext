@@ -16,6 +16,8 @@ export const PostProvider = ({ children }) => {
     const [users, setUsers] = useState([])
     const [filterComments, setFilterComments] = useState("")
 
+    const [showComponent, setShowComponent] = useState(false);
+    const [open, setOpen] = useState(true)
 
     // GET POST
     const fetchPosts = async () => {
@@ -66,13 +68,17 @@ export const PostProvider = ({ children }) => {
     }
 
 
+    // let confirmation = confirm("Want to delete?");
     // DELETE POST
+
+
+
     const removePost = async (id) => {
         try {
-            let confirmation = confirm("Want to delete?");
-            await deletePost(id)
-
-            setPosts((prev) => prev.filter((post) => post.id !== id));
+            // setShowComponent(true);
+                await deletePost(id)
+                setPosts((prev) => prev.filter((post) => post.id !== id));
+            setShowComponent(false);
 
         } catch (error) {
             console.error(error);
@@ -94,9 +100,7 @@ export const PostProvider = ({ children }) => {
     }, [])
 
     //PAGiNATION
-    const handleItemPerPage = () => {
-
-    }
+    
     const startIndex = currentPage * itemsPerPage;
     const endIndex = startIndex - itemsPerPage;
 
@@ -172,7 +176,6 @@ setComments(res.data)
             handleNextBtn,
             handlePrevBtn,
             setitemsPerPage,
-            handleItemPerPage,
             currentItems,
             handleFilterPost,
             handleSearchPost,
@@ -188,7 +191,11 @@ setComments(res.data)
             handleSelectUser,
             filterComments,
             handleFilterComments,
-            setFilterComments
+            setFilterComments,
+            showComponent,
+            setShowComponent,
+            open,
+            setOpen
         }}>
             {children}
         </PostContext.Provider>

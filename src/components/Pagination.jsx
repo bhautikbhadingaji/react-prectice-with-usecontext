@@ -6,7 +6,6 @@ export const Pagination = () => {
     const {
         itemsPerPage,
         setitemsPerPage,
-        handleItemPerPage,
         currentItems,
         handlePrevBtn,
         handleNextBtn,
@@ -16,7 +15,7 @@ export const Pagination = () => {
         <>
             <div className="flex items-center justify-center space-x-4 my-6 font-sans sticky bottom-0 bg-gray-500">
                 <select className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1.5 shadow-sm outline-none cursor-pointer"
-                    value={itemsPerPage} onChange={(e) => setitemsPerPage(e.target.value)} onClick={handleItemPerPage}>
+                    value={itemsPerPage} onChange={(e) => setitemsPerPage(e.target.value)}>
                     <option>Select Posts Page</option>
                     <option>5</option>
                     <option>10</option>

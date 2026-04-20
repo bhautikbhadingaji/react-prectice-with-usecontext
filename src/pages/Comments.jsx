@@ -25,7 +25,7 @@ export const CommentsPage = () => {
                 />
 
                 <button
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer ml-2"
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer ml-2 mt-4.5"
                     onClick={()=>handleFilterComments(id)}
                 >Filter</button>
             </div>
