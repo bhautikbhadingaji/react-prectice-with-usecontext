@@ -1,5 +1,6 @@
-import { useContext } from "react"
+import { useCallback, useContext } from "react"
 import { PostContext } from "../context/Context"
+import toast from "react-hot-toast";
 
 export const Pagination = () => {
 
@@ -7,9 +8,27 @@ export const Pagination = () => {
         itemsPerPage,
         setitemsPerPage,
         currentItems,
-        handlePrevBtn,
-        handleNextBtn,
-        currentPage } = useContext(PostContext);
+        currentPage,
+        totalPages,
+        setCurrentPage } = useContext(PostContext);
+
+    const handlePrevBtn = useCallback(() => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1)
+        }
+    }, [
+        currentPage
+    ])
+
+    const handleNextBtn = useCallback(() => {
+        if (currentPage < totalPages) {
+            setCurrentPage((prev) => prev + 1)
+        } else {
+            toast.error("can't Go To Next Page")
+        }
+    }, [
+        currentPage, totalPages
+    ])
 
     return (
         <>

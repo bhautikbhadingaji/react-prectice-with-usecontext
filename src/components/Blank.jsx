@@ -8,11 +8,10 @@ import { useNavigate } from 'react-router-dom'
 import { PostContext } from '../context/Context'
 
 
-export const Blank = ({ openForm1, setOpenForm1, openEdit, setOpenEdit }) => {
+export const Blank = ({ openEdit, setOpenEdit }) => {
+    const { addPost, editData, updatePost, setEditData, editTitle, setEditTitle, updateTitle, openForm, setOpenForm} = useContext(PostContext)
 
-
-
-    const { addPost, editData, updatePost, setEditData, editTitle, setEditTitle, updateTitle } = useContext(PostContext)
+    console.log("edit title",editTitle)
     const navigate = useNavigate();
 
 
@@ -39,7 +38,7 @@ export const Blank = ({ openForm1, setOpenForm1, openEdit, setOpenEdit }) => {
         const postData = { title, body, userId: 1 };
         const titleData = { title }
         toast.success("Add Post Successfully");
-
+        
         if (editData) {
             updatePost(editData.id, postData)
             setEditData({})
@@ -48,22 +47,22 @@ export const Blank = ({ openForm1, setOpenForm1, openEdit, setOpenEdit }) => {
             updateTitle(editTitle.id, titleData)
             setEditTitle({})
             toast.success("Edit Title Successfully");
-
+            
         }
         else {
-
+            
             addPost({ title, body, userId: 1 })
         }
         setTitle("")
         setBody("")
-        setOpenForm1(false)
+        setOpenForm(false)
         navigate("/")
     }
 
 
     return (
         <>
-            <Dialog open={openForm1} onClose={setOpenForm1} className="relative z-10">
+            <Dialog open={openForm} onClose={setOpenForm} className="relative z-10">
                 <DialogBackdrop
                     transition
                     className="fixed inset-0 bg-gray-900/50 transition-opacity duration-500 ease-in-out data-closed:opacity-0"
@@ -80,7 +79,7 @@ export const Blank = ({ openForm1, setOpenForm1, openEdit, setOpenEdit }) => {
                                     <div className="absolute top-0 left-0 -ml-8 flex pt-4 pr-2 duration-500 ease-in-out data-closed:opacity-0 sm:-ml-10 sm:pr-4">
                                         <button
                                             type="button"
-                                            onClick={() => setOpenForm1(false)}
+                                            onClick={() => setOpenForm(false)}
                                             className="relative rounded-md text-gray-400 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
                                         >
                                             <span className="absolute -inset-2.5" />

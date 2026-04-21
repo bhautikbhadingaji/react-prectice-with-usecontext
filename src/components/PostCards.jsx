@@ -12,7 +12,8 @@ import { Blank } from "./Blank";
 export const PostCards = () => {
 
     const [id, setId] = useState(null)
-    const [openEdit, setOpenEdit] = useState(false)
+    // const [openEdit, setOpenEdit] = useState(false)
+
 
     const {
         handleEditPost,
@@ -20,12 +21,27 @@ export const PostCards = () => {
         handleChangeTitle,
         currentItems,
         showComponent,
-        setShowComponent } = useContext(PostContext);
+        setShowComponent,
+        openForm,
+        setOpenForm } = useContext(PostContext);
+
+        console.log(" test open",openForm)
 
     const showDialog = async (id) => {
         setShowComponent(true)
         setId(id)
         console.log("id", id)
+    }
+
+    const editBtnClick = (post) => {
+        handleChangeTitle(post)
+        setOpenForm(true)
+        console.log("editbtn",post)
+    }
+
+    const allEditClick = (post) =>{
+        handleEditPost(post)
+        setOpenForm(true)
     }
 
 
@@ -41,11 +57,10 @@ export const PostCards = () => {
                             data-tooltip-id="title-tooltip"
                             data-tooltip-content={post.title}
                         >
-                            TITLE: {post.title.substring(0, 12) + ' ...'}
-                            <button 
-                            onClick={()=>setOpenEdit(true)}>
+                            TITLE:{post.title.length<=12 ? post.title : post.title.substring(0, 12) + ' ...'}
+                            <button>
                                 <RiEdit2Fill className="cursor-pointer inline-block ml-3"
-                                    onClick={() => handleChangeTitle(post)} />
+                                    onClick={() =>editBtnClick(post) } />
                             </button>
                         </h2>
 
@@ -59,8 +74,8 @@ export const PostCards = () => {
                         </div>
 
                         <div className="flex items-center gap-8 mt-7">
-                            <button 
-                                onClick={() => handleEditPost(post)}
+                            <button
+                                onClick={() => allEditClick(post)}
                                 className="bg-orange-300 hover:bg-orange-500 text-white font-bold py-2 h-10 px-4 rounded cursor-pointer mt-7 flex items-center gap-2">
                                 EDIT<FiEdit />
                             </button>
@@ -74,6 +89,7 @@ export const PostCards = () => {
                                 <button className="bg-gray-400 hover:bg-gray-700 text-white font-bold h-10 py-2 px-4 rounded cursor-pointer mt-7 flex items-center gap-2">Comments <FaRegCommentDots /></button>
                             </NavLink>
                             <DialogsBox isOpen={showComponent} setShowComponent={setShowComponent} id={id} />
+                            {/* <Blank openEdit={openEdit} setOpenEdit={setOpenEdit}/> */}
                         </div>
                     </div>
                 ))}

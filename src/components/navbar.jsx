@@ -1,10 +1,13 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { NavLink } from "react-router-dom"
 import { Blank } from "./Blank"
+import { PostContext } from "../context/Context"
 
 export const Navbar = () => {
 
-const [openForm1, setOpenForm1] =  useState(false)
+const {setOpenForm, openForm} = useContext(PostContext);
+
+console.log("opF",openForm)
 
     return (
         <nav className="flex justify-between item-center bg-gray-500 text-white px-6 py-4 shadow-md sticky top-0 mt-0">
@@ -16,13 +19,13 @@ const [openForm1, setOpenForm1] =  useState(false)
                     </NavLink>
                 </li>
                 <button className="cursor-pointer hover:text-teal-400 "
-                onClick={()=>setOpenForm1(true)}>
+                onClick={()=>setOpenForm(true)}>
                     {/* <NavLink to="/add-post"> */}
                         Add Post
                     {/* </NavLink> */}
                 </button>
             </ul>
-            <Blank openForm1 ={openForm1} setOpenForm1={setOpenForm1}/>
+            <Blank openForm1 ={openForm} setOpenForm1={setOpenForm}/>
         </nav>
     )
 }

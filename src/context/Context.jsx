@@ -1,6 +1,7 @@
 import { createContext, useCallback, useEffect } from "react"
 import { useState } from "react"
 import { createPosts, deletePost, editPost, editTitlePost, getComments, getFilteredComments, getFilteredPost, getPosts, getsearchedPost, getUsers, getUsersPost } from "../api/axios";
+import toast from "react-hot-toast";
 
 export const PostContext = createContext();
 
@@ -19,6 +20,8 @@ export const PostProvider = ({ children }) => {
     const [showComponent, setShowComponent] = useState(false);
     const [open, setOpen] = useState(true)
 
+    const [openForm, setOpenForm] =  useState(false)
+
     // GET POST
     const fetchPosts = async () => {
         const res = await getPosts()
@@ -30,10 +33,6 @@ export const PostProvider = ({ children }) => {
         const res = await getUsers()
         setUsers(res.data)
     }
-
-    useEffect(() => {
-        fetchUsers()
-    },[])
 
     // CREATE POST
     const addPost = async (data) => {
@@ -79,6 +78,7 @@ export const PostProvider = ({ children }) => {
                 await deletePost(id)
                 setPosts((prev) => prev.filter((post) => post.id !== id));
             setShowComponent(false);
+            toast.success("Post Delete Successfully")
 
         } catch (error) {
             console.error(error);
@@ -92,11 +92,9 @@ export const PostProvider = ({ children }) => {
     }
 
     useEffect(() => {
-        fetchComments()
-    }, [])
-
-    useEffect(() => {
         fetchPosts();
+        fetchUsers();
+        fetchComments();
     }, [])
 
     //PAGiNATION
@@ -108,23 +106,6 @@ export const PostProvider = ({ children }) => {
 
     const totalPages = Math.ceil(posts.length / itemsPerPage);
 
-    const handlePrevBtn = useCallback(() => {
-        if (currentPage > 1) {
-            setCurrentPage(currentPage - 1)
-        }
-    }, [
-        currentPage
-    ])
-
-    const handleNextBtn = useCallback(() => {
-        if (currentPage < totalPages) {
-            setCurrentPage((prev) => prev + 1)
-        } else {
-            console.log("can't go next")
-        }
-    }, [
-        currentPage, totalPages
-    ])
 
     //FILTER AND SEARCH
 
@@ -172,11 +153,11 @@ setComments(res.data)
             comments,
             fetchComments,
             currentPage,
+            setCurrentPage,
             itemsPerPage,
-            handleNextBtn,
-            handlePrevBtn,
             setitemsPerPage,
             currentItems,
+            totalPages,
             handleFilterPost,
             handleSearchPost,
             setFilterPost,
@@ -195,7 +176,9 @@ setComments(res.data)
             showComponent,
             setShowComponent,
             open,
-            setOpen
+            setOpen,
+            openForm,
+            setOpenForm
         }}>
             {children}
         </PostContext.Provider>
