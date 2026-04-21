@@ -7,7 +7,6 @@ export const Navbar = () => {
 
 const {setOpenForm, openForm} = useContext(PostContext);
 
-console.log("opF",openForm)
 
     return (
         <nav className="flex justify-between item-center bg-gray-500 text-white px-6 py-4 shadow-md sticky top-0 mt-0">

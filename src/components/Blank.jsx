@@ -11,7 +11,6 @@ import { PostContext } from '../context/Context'
 export const Blank = ({ openEdit, setOpenEdit }) => {
     const { addPost, editData, updatePost, setEditData, editTitle, setEditTitle, updateTitle, openForm, setOpenForm} = useContext(PostContext)
 
-    console.log("edit title",editTitle)
     const navigate = useNavigate();
 
 

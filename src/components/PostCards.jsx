@@ -25,18 +25,15 @@ export const PostCards = () => {
         openForm,
         setOpenForm } = useContext(PostContext);
 
-        console.log(" test open",openForm)
 
     const showDialog = async (id) => {
         setShowComponent(true)
         setId(id)
-        console.log("id", id)
     }
 
     const editBtnClick = (post) => {
         handleChangeTitle(post)
         setOpenForm(true)
-        console.log("editbtn",post)
     }
 
     const allEditClick = (post) =>{

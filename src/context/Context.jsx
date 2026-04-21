@@ -81,7 +81,7 @@ export const PostProvider = ({ children }) => {
             toast.success("Post Delete Successfully")
 
         } catch (error) {
-            console.error(error);
+           toast.error("somthing went wronge")
         }
     }
 
@@ -114,7 +114,7 @@ export const PostProvider = ({ children }) => {
             const res = await getFilteredPost(filterPost);
             setPosts(res.data);
         } catch (err) {
-            console.error("Fetch posts failed", err);
+            toast.error("filter post faild")
         }
     };
 
@@ -122,8 +122,8 @@ export const PostProvider = ({ children }) => {
         try {
             const res = await getsearchedPost(searchValue);
             setPosts(res.data);
-        } catch (err) {
-            console.error("Fetch posts failed", err);
+        } catch (error) {
+         toast.error("Fetch posts failed")
         }
     }
 
