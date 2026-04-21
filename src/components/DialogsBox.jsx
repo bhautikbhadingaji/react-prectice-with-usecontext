@@ -11,7 +11,7 @@ export const DialogsBox = ({isOpen, setShowComponent, id}) => {
 
     return (
         <div>
-            <Dialog open={isOpen} onClose={()=>setShowComponent(false)} className="relative z-10">
+            <Dialog open={isOpen} onClose={()=>{setShowComponent(false)}} className="relative z-10">
                 <DialogBackdrop
                     transition
                     className="fixed inset-0 bg-gray-900/50 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"

@@ -9,7 +9,7 @@ import { PostContext } from '../context/Context'
 
 
 export const Blank = ({ openEdit, setOpenEdit }) => {
-    const { addPost, editData, updatePost, setEditData, editTitle, setEditTitle, updateTitle, openForm, setOpenForm} = useContext(PostContext)
+    const { addPost, editData, updatePost, setEditData, editTitle, setEditTitle, updateTitle, openForm, setOpenForm, } = useContext(PostContext)
 
     const navigate = useNavigate();
 
@@ -21,36 +21,32 @@ export const Blank = ({ openEdit, setOpenEdit }) => {
         if (editData) {
             setTitle(editData.title || "")
             setBody(editData.body || "")
-        }
-    }, [editData])
-
-    useEffect(() => {
-        if (editTitle) {
+        } else if (editTitle) {
             setTitle(editTitle.title || "")
+        } else {
+            setTitle("")
+            setBody("")
         }
-    }, [editTitle])
-
-
+    }, [editData, editTitle])
 
     const handleSubmit = (e) => {
         e.preventDefault();
         const postData = { title, body, userId: 1 };
         const titleData = { title }
-        toast.success("Add Post Successfully");
-        
+
         if (editData) {
             updatePost(editData.id, postData)
-            setEditData({})
+            setEditData(null)
             toast.success("Edit Post Successfully");
-        } if (editTitle) {
+        } else if (editTitle) {
             updateTitle(editTitle.id, titleData)
-            setEditTitle({})
+            setEditTitle(null)
             toast.success("Edit Title Successfully");
-            
+
         }
         else {
-            
             addPost({ title, body, userId: 1 })
+            toast.success("Add Post Successfully");
         }
         setTitle("")
         setBody("")
@@ -58,10 +54,17 @@ export const Blank = ({ openEdit, setOpenEdit }) => {
         navigate("/")
     }
 
+    const CloseForm = () => {
+        setBody("")
+        setTitle("")
+        setOpenForm(false)
+        setEditData(false)
+        setEditTitle(false)
+    }
 
     return (
         <>
-            <Dialog open={openForm} onClose={setOpenForm} className="relative z-10">
+            <Dialog open={openForm} onClose={() => CloseForm()} className="relative z-10">
                 <DialogBackdrop
                     transition
                     className="fixed inset-0 bg-gray-900/50 transition-opacity duration-500 ease-in-out data-closed:opacity-0"
@@ -103,15 +106,15 @@ export const Blank = ({ openEdit, setOpenEdit }) => {
                                                         value={title}
                                                         onChange={(e) => setTitle(e.target.value)}
                                                     />
-
-                                                    <textarea
+                                                    {editTitle ? null : <textarea
                                                         className="border border-gray-700 bg-gray-300 text-black caret-pink-500 p-2 rounded focus:ring-2 focus:ring-blue-500 outline-none"
                                                         type="text"
                                                         placeholder="Add Body..."
                                                         value={body}
                                                         disabled={editTitle}
                                                         onChange={(e) => setBody(e.target.value)}
-                                                    />
+                                                    />}
+
 
                                                     <button
                                                         className="py-2 px-4 flex justify-center items-center  bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg max-w-md"

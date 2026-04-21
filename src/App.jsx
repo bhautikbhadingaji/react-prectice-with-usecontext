@@ -16,8 +16,6 @@ function App() {
       <BrowserRouter>
       <Routes>
         <Route path= "/" element={<AllPosts />}/>
-        {/* <Route path= "/add-post" element={<Form />}/> */}
-        <Route path="/posts/:id" element={<CardDetails />}/>
         <Route path="/posts/:id/comments" element={<CommentsPage />} />
       </Routes>
       </BrowserRouter>

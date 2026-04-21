@@ -8,12 +8,16 @@ import { Tooltip } from 'react-tooltip'
 import { DialogsBox } from "./DialogsBox";
 import { Navbar } from "./navbar";
 import { Blank } from "./Blank";
+import { CardDetails } from "../pages/CardDetails";
+import { Drawers } from "./Drawers";
 
 export const PostCards = () => {
 
-    const [id, setId] = useState(null)
-    // const [openEdit, setOpenEdit] = useState(false)
+    const [postId, setPostId] = useState(null)
+    const [readMoreId, setReadMoreId] = useState(null)
 
+    
+    const [openCardDetails, setOpenCardDetails] = useState(false)
 
     const {
         handleEditPost,
@@ -28,7 +32,7 @@ export const PostCards = () => {
 
     const showDialog = async (id) => {
         setShowComponent(true)
-        setId(id)
+        setPostId(id)
     }
 
     const editBtnClick = (post) => {
@@ -36,9 +40,14 @@ export const PostCards = () => {
         setOpenForm(true)
     }
 
-    const allEditClick = (post) =>{
+    const allEditClick = (post) => {
         handleEditPost(post)
         setOpenForm(true)
+    }
+
+    const handleCardDeatails = (id) => {
+        setOpenCardDetails(true)
+        setReadMoreId(id)
     }
 
 
@@ -54,22 +63,22 @@ export const PostCards = () => {
                             data-tooltip-id="title-tooltip"
                             data-tooltip-content={post.title}
                         >
-                            TITLE:{post.title.length<=12 ? post.title : post.title.substring(0, 12) + ' ...'}
+                            TITLE:{post.title.length <= 12 ? post.title : post.title.substring(0, 12) + ' ...'}
                             <button>
                                 <RiEdit2Fill className="cursor-pointer inline-block ml-3"
-                                    onClick={() =>editBtnClick(post) } />
+                                    onClick={() => editBtnClick(post)} />
                             </button>
                         </h2>
 
                         <p className="bg-green-200 text-gray-500 px-4 py-2 rounded-lg hover:bg-green-300">
                             BODY: {post.body.substring(0, 100) + ' ...'}
                         </p>
-                        <div className="text-blue-500 hover:text-blue-700">
-                            <NavLink to={`/posts/${post.id}`}>
+                        <button
+                            className="text-blue-500 hover:text-blue-700 cursor-pointer"
+                                onClick={()=>{handleCardDeatails(post.id)}}>
                                 Read More...
-                            </NavLink>
-                        </div>
-
+                            </button>
+                           
                         <div className="flex items-center gap-8 mt-7">
                             <button
                                 onClick={() => allEditClick(post)}
@@ -85,13 +94,13 @@ export const PostCards = () => {
                             <NavLink to={`/posts/${post.id}/comments`}>
                                 <button className="bg-gray-400 hover:bg-gray-700 text-white font-bold h-10 py-2 px-4 rounded cursor-pointer mt-7 flex items-center gap-2">Comments <FaRegCommentDots /></button>
                             </NavLink>
-                            <DialogsBox isOpen={showComponent} setShowComponent={setShowComponent} id={id} />
-                            {/* <Blank openEdit={openEdit} setOpenEdit={setOpenEdit}/> */}
                         </div>
                     </div>
                 ))}
             </div>
             <Tooltip id="title-tooltip" />
+                <DialogsBox isOpen={showComponent} setShowComponent={setShowComponent} id={postId} />
+               {openCardDetails && <Drawers openCardDetails={openCardDetails} setOpenCardDetails={setOpenCardDetails} id={readMoreId}/>}
         </>
     )
 }
