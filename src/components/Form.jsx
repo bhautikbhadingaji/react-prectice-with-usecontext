@@ -1,10 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PostContext } from "../context/Context";
+import toast from "react-hot-toast";
 
-export const Form = () => {
+export const Form = ({ openCardDetails, setOpenCardDetails }) => {
 
-    const { addPost, editData, updatePost, setEditData, editTitle, setEditTitle, updateTitle, openForm, setOpenForm, } = useContext(PostContext)
+    const { addPost, editData, updatePost, setEditData, editTitle, setEditTitle, updateTitle, openForm, setOpenForm } = useContext(PostContext)
 
     const navigate = useNavigate();
 
@@ -37,16 +38,16 @@ export const Form = () => {
             updateTitle(editTitle.id, titleData)
             setEditTitle(null)
             toast.success("Edit Title Successfully");
-
+            
         }
         else {
             addPost({ title, body, userId: 1 })
             toast.success("Add Post Successfully");
+            setTitle("")
+            setBody("")
         }
-        setTitle("")
-        setBody("")
         setOpenForm(false)
-        navigate("/")
+        setOpenCardDetails(false)
     }
 
     const CloseForm = () => {

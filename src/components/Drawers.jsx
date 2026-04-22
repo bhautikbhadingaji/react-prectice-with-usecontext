@@ -2,16 +2,23 @@ import { useContext, useState } from 'react'
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle, TransitionChild } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { PostContext } from '../context/Context'
+import { CardDetails } from '../pages/CardDetails'
+import { Form } from './Form'
 
-export const Drawers = ({openCardDetails, setOpenCardDetails, id}) => {
+export const Drawers = ({ openCardDetails, setOpenCardDetails, id }) => {
 
-    const {posts} = useContext(PostContext)
+  const { posts, openForm, setOpenForm } = useContext(PostContext)
 
-    const post = posts.find((item)=> item.id === id)
+  const handleClose = () => {
+    setOpenCardDetails(false);
+    if (openForm) {
+      setOpenForm(false);
+    }
+  };
 
   return (
     <div>
-      <Dialog open={openCardDetails} onClose={setOpenCardDetails} className="relative z-10">
+      <Dialog open={openCardDetails} onClose={handleClose} className="relative z-10">
         <DialogBackdrop
           transition
           className="fixed inset-0 bg-gray-900/50 transition-opacity duration-500 ease-in-out data-closed:opacity-0"
@@ -39,12 +46,14 @@ export const Drawers = ({openCardDetails, setOpenCardDetails, id}) => {
                 </TransitionChild>
                 <div className="relative flex h-full flex-col overflow-y-auto bg-gray-800 py-6 shadow-xl after:absolute after:inset-y-0 after:left-0 after:w-px after:bg-white/10">
                   <div className="px-4 sm:px-6">
-                    <DialogTitle className="text-base font-semibold text-white">Panel title</DialogTitle>
+                    <DialogTitle className="text-base font-semibold text-white">{openForm ? "Form" : "Card Details"}</DialogTitle>
                   </div>
                   <div className="relative mt-6 flex-1 px-4 sm:px-6 text-white">
-
-                    <h1>TITLE: {post.title}</h1>
-                    <p> BODY: {post.body}</p>
+                    {openForm ? (
+                      <Form openCardDetails={openCardDetails} setOpenCardDetails={setOpenCardDetails} />
+                    ) : (
+                      <CardDetails postData={id} />
+                    )}
 
                   </div>
                 </div>

@@ -7,6 +7,10 @@ export const Navbar = () => {
 
 const {setOpenForm, openForm} = useContext(PostContext);
 
+const handleAddPostDrawer = () => {
+    setOpenForm(true)
+}
+
 
     return (
         <nav className="flex justify-between item-center bg-gray-500 text-white px-6 py-4 shadow-md sticky top-0 mt-0">
@@ -18,13 +22,13 @@ const {setOpenForm, openForm} = useContext(PostContext);
                     </NavLink>
                 </li>
                 <button className="cursor-pointer hover:text-teal-400 "
-                onClick={()=>setOpenForm(true)}>
+                onClick={()=>{handleAddPostDrawer()}}>
                     {/* <NavLink to="/add-post"> */}
                         Add Post
                     {/* </NavLink> */}
                 </button>
             </ul>
-            <Blank openForm1 ={openForm} setOpenForm1={setOpenForm}/>
+            {/* <Blank openForm1 ={openForm} setOpenForm1={setOpenForm}/> */}
         </nav>
     )
 }

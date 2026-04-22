@@ -37,7 +37,7 @@ export const DialogsBox = ({isOpen, setShowComponent, id}) => {
                                         </DialogTitle>
                                         <div className="mt-2">
                                             <p className="text-sm text-gray-400">
-                                                Are you sure you want to delete this post? All of your Post will be permanently removed.
+                                                Are you sure you want to delete this post? Your Post will be permanently removed.
                                                 This action cannot be undone.
                                             </p>
                                         </div>

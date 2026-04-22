@@ -10,13 +10,12 @@ import { Navbar } from "./navbar";
 import { Blank } from "./Blank";
 import { CardDetails } from "../pages/CardDetails";
 import { Drawers } from "./Drawers";
+import { Form } from "./Form";
 
 export const PostCards = () => {
 
     const [postId, setPostId] = useState(null)
     const [readMoreId, setReadMoreId] = useState(null)
-
-    
     const [openCardDetails, setOpenCardDetails] = useState(false)
 
     const {
@@ -35,21 +34,20 @@ export const PostCards = () => {
         setPostId(id)
     }
 
-    const editBtnClick = (post) => {
-        handleChangeTitle(post)
-        setOpenForm(true)
-    }
 
-    const allEditClick = (post) => {
-        handleEditPost(post)
-        setOpenForm(true)
-    }
+    const handleDrawerOpen = (callBy, postData, post) => {
 
-    const handleCardDeatails = (id) => {
+        if (callBy === "readMore") {
+            setReadMoreId(postData)
+        } else if (callBy === "allDataEdit") {
+            setOpenForm(true)
+            handleEditPost(postData)
+        } else if (callBy === "EditTitle") {
+            handleChangeTitle(postData)
+            setOpenForm(true)
+        }
         setOpenCardDetails(true)
-        setReadMoreId(id)
     }
-
 
     return (
         <>
@@ -66,7 +64,7 @@ export const PostCards = () => {
                             TITLE:{post.title.length <= 12 ? post.title : post.title.substring(0, 12) + ' ...'}
                             <button>
                                 <RiEdit2Fill className="cursor-pointer inline-block ml-3"
-                                    onClick={() => editBtnClick(post)} />
+                                    onClick={() => handleDrawerOpen("EditTitle", post)} />
                             </button>
                         </h2>
 
@@ -75,13 +73,13 @@ export const PostCards = () => {
                         </p>
                         <button
                             className="text-blue-500 hover:text-blue-700 cursor-pointer"
-                                onClick={()=>{handleCardDeatails(post.id)}}>
-                                Read More...
-                            </button>
-                           
+                            onClick={() => { handleDrawerOpen("readMore", post.id) }}>
+                            Read More...
+                        </button>
+
                         <div className="flex items-center gap-8 mt-7">
                             <button
-                                onClick={() => allEditClick(post)}
+                                onClick={() => handleDrawerOpen("allDataEdit", post)}
                                 className="bg-orange-300 hover:bg-orange-500 text-white font-bold py-2 h-10 px-4 rounded cursor-pointer mt-7 flex items-center gap-2">
                                 EDIT<FiEdit />
                             </button>
@@ -99,8 +97,8 @@ export const PostCards = () => {
                 ))}
             </div>
             <Tooltip id="title-tooltip" />
-                <DialogsBox isOpen={showComponent} setShowComponent={setShowComponent} id={postId} />
-               {openCardDetails && <Drawers openCardDetails={openCardDetails} setOpenCardDetails={setOpenCardDetails} id={readMoreId}/>}
+            <DialogsBox isOpen={showComponent} setShowComponent={setShowComponent} id={postId} />
+            {openCardDetails && <Drawers openCardDetails={openCardDetails} setOpenCardDetails={setOpenCardDetails} id={readMoreId} />}
         </>
     )
 }
