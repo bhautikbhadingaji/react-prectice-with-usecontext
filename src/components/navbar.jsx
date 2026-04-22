@@ -5,10 +5,11 @@ import { PostContext } from "../context/Context"
 
 export const Navbar = () => {
 
-const {setOpenForm, openForm} = useContext(PostContext);
+const {setOpenForm, openForm, setOpenCloseDrawer} = useContext(PostContext);
 
 const handleAddPostDrawer = () => {
     setOpenForm(true)
+    setOpenCloseDrawer(true)
 }
 
 
@@ -23,12 +24,9 @@ const handleAddPostDrawer = () => {
                 </li>
                 <button className="cursor-pointer hover:text-teal-400 "
                 onClick={()=>{handleAddPostDrawer()}}>
-                    {/* <NavLink to="/add-post"> */}
                         Add Post
-                    {/* </NavLink> */}
                 </button>
             </ul>
-            {/* <Blank openForm1 ={openForm} setOpenForm1={setOpenForm}/> */}
         </nav>
     )
 }

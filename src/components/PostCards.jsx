@@ -16,7 +16,6 @@ export const PostCards = () => {
 
     const [postId, setPostId] = useState(null)
     const [readMoreId, setReadMoreId] = useState(null)
-    const [openCardDetails, setOpenCardDetails] = useState(false)
 
     const {
         handleEditPost,
@@ -26,7 +25,9 @@ export const PostCards = () => {
         showComponent,
         setShowComponent,
         openForm,
-        setOpenForm } = useContext(PostContext);
+        setOpenForm,
+        openCloseDrawer,
+        setOpenCloseDrawer } = useContext(PostContext);
 
 
     const showDialog = async (id) => {
@@ -46,7 +47,7 @@ export const PostCards = () => {
             handleChangeTitle(postData)
             setOpenForm(true)
         }
-        setOpenCardDetails(true)
+        setOpenCloseDrawer(true)
     }
 
     return (
@@ -98,7 +99,7 @@ export const PostCards = () => {
             </div>
             <Tooltip id="title-tooltip" />
             <DialogsBox isOpen={showComponent} setShowComponent={setShowComponent} id={postId} />
-            {openCardDetails && <Drawers openCardDetails={openCardDetails} setOpenCardDetails={setOpenCardDetails} id={readMoreId} />}
+            {openCloseDrawer && <Drawers id={readMoreId} />}
         </>
     )
 }

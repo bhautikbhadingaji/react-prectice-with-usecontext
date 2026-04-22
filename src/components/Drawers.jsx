@@ -5,12 +5,12 @@ import { PostContext } from '../context/Context'
 import { CardDetails } from '../pages/CardDetails'
 import { Form } from './Form'
 
-export const Drawers = ({ openCardDetails, setOpenCardDetails, id }) => {
+export const Drawers = ({ id }) => {
 
-  const { posts, openForm, setOpenForm } = useContext(PostContext)
+  const { posts, openForm, setOpenForm, openCloseDrawer, setOpenCloseDrawer } = useContext(PostContext)
 
   const handleClose = () => {
-    setOpenCardDetails(false);
+    setOpenCloseDrawer(false);
     if (openForm) {
       setOpenForm(false);
     }
@@ -18,7 +18,7 @@ export const Drawers = ({ openCardDetails, setOpenCardDetails, id }) => {
 
   return (
     <div>
-      <Dialog open={openCardDetails} onClose={handleClose} className="relative z-10">
+      <Dialog open={openCloseDrawer} onClose={handleClose} className="relative z-10">
         <DialogBackdrop
           transition
           className="fixed inset-0 bg-gray-900/50 transition-opacity duration-500 ease-in-out data-closed:opacity-0"
@@ -35,7 +35,7 @@ export const Drawers = ({ openCardDetails, setOpenCardDetails, id }) => {
                   <div className="absolute top-0 left-0 -ml-8 flex pt-4 pr-2 duration-500 ease-in-out data-closed:opacity-0 sm:-ml-10 sm:pr-4">
                     <button
                       type="button"
-                      onClick={() => setOpenCardDetails(false)}
+                      onClick={() => setOpenCloseDrawer(false)}
                       className="relative rounded-md text-gray-400 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
                     >
                       <span className="absolute -inset-2.5" />
@@ -50,7 +50,7 @@ export const Drawers = ({ openCardDetails, setOpenCardDetails, id }) => {
                   </div>
                   <div className="relative mt-6 flex-1 px-4 sm:px-6 text-white">
                     {openForm ? (
-                      <Form openCardDetails={openCardDetails} setOpenCardDetails={setOpenCardDetails} />
+                      <Form />
                     ) : (
                       <CardDetails postData={id} />
                     )}

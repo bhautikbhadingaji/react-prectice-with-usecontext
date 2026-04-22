@@ -22,6 +22,9 @@ export const PostProvider = ({ children }) => {
 
     const [openForm, setOpenForm] =  useState(false)
 
+    
+    const [openCloseDrawer, setOpenCloseDrawer] = useState(false)
+
     // GET POST
     const fetchPosts = async () => {
         const res = await getPosts()
@@ -178,7 +181,9 @@ setComments(res.data)
             open,
             setOpen,
             openForm,
-            setOpenForm
+            setOpenForm,
+            openCloseDrawer,
+            setOpenCloseDrawer
         }}>
             {children}
         </PostContext.Provider>

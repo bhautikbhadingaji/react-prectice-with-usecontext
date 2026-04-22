@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { PostContext } from "../context/Context";
 import toast from "react-hot-toast";
 
-export const Form = ({ openCardDetails, setOpenCardDetails }) => {
+export const Form = () => {
 
-    const { addPost, editData, updatePost, setEditData, editTitle, setEditTitle, updateTitle, openForm, setOpenForm } = useContext(PostContext)
+    const { addPost, editData, updatePost, setEditData, editTitle, setEditTitle, updateTitle, openForm, setOpenForm, openCloseDrawer,setOpenCloseDrawer } = useContext(PostContext)
 
     const navigate = useNavigate();
 
@@ -47,7 +47,7 @@ export const Form = ({ openCardDetails, setOpenCardDetails }) => {
             setBody("")
         }
         setOpenForm(false)
-        setOpenCardDetails(false)
+        setOpenCloseDrawer(false)
     }
 
     const CloseForm = () => {
