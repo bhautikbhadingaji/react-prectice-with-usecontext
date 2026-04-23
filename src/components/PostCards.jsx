@@ -7,7 +7,6 @@ import { FaRegCommentDots } from "react-icons/fa";
 import { Tooltip } from 'react-tooltip'
 import { DialogsBox } from "./DialogsBox";
 import { Navbar } from "./navbar";
-import { Blank } from "./Blank";
 import { CardDetails } from "../pages/CardDetails";
 import { Drawers } from "./Drawers";
 import { Form } from "./Form";

@@ -26,8 +26,8 @@ export const PostProvider = ({ children }) => {
 
     const [openForm, setOpenForm] = useState(false)
 
-
     const [openCloseDrawer, setOpenCloseDrawer] = useState(false)
+
 
     // GET POST
     const fetchPosts = async () => {
@@ -99,13 +99,18 @@ export const PostProvider = ({ children }) => {
     }, [setSelectedUser])
 
     //PAGiNATION
-    
     const startIndex = currentPage * itemsPerPage;
     const endIndex = startIndex - itemsPerPage;
 
-    const currentItems = posts.slice(endIndex, startIndex);
-
+    let currentItems = posts.slice(0, itemsPerPage)
     const totalPages = Math.ceil(posts.length / itemsPerPage);
+    currentItems = posts.slice(endIndex, startIndex);
+
+    useEffect(() => {
+        if (seletedUser !== "All") {
+            setitemsPerPage(10)
+        }
+    }, [seletedUser])
 
 
     //FILTER AND SEARCH
@@ -124,7 +129,7 @@ export const PostProvider = ({ children }) => {
             const res = await getsearchedPost(searchValue);
             setPosts(res.data);
         } catch (error) {
-         toast.error("Fetch posts failed")
+            toast.error("Fetch posts failed")
         }
     }
 
@@ -133,12 +138,18 @@ export const PostProvider = ({ children }) => {
         if (value === "All") {
             const res = await getPosts()
             setPosts(res.data)
-        } 
+        }
         else {
             const res = await getUsersPost(value)
             setPosts(res.data)
+            setitemsPerPage(currentItems.length)
         }
         setSelectedUser(value)
+    }
+
+    // ITEM-PER=PAGE
+    const handleItemPerPage = (e) => {
+        setitemsPerPage(e.target.value)
     }
 
     //FILTER COMMENTS
@@ -193,7 +204,8 @@ export const PostProvider = ({ children }) => {
             selectUserFromForm,
             setSelectUserFromForm,
             fetchPosts,
-            seletedUser
+            seletedUser,
+            handleItemPerPage
 
         }}>
             {children}

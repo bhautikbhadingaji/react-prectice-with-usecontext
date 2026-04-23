@@ -6,7 +6,7 @@ import { Users } from "./Users";
 
 export const Form = () => {
 
-    const { addPost, editData, updatePost, setEditData, editTitle, setEditTitle, updateTitle, openForm, setOpenForm, openCloseDrawer, setOpenCloseDrawer, seletedUser, users, handleSelectUser, setSelectedUser, selectUserFromForm, setSelectUserFromForm, fetchPosts } = useContext(PostContext)
+    const { addPost, editData, updatePost, setEditData, editTitle, setEditTitle, updateTitle, setOpenForm, openCloseDrawer, setOpenCloseDrawer, users, handleSelectUser, setSelectedUser, selectUserFromForm, setSelectUserFromForm, fetchPosts } = useContext(PostContext)
 
     const navigate = useNavigate();
 
