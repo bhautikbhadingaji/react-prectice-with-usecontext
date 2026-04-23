@@ -15,14 +15,18 @@ export const PostProvider = ({ children }) => {
     const [searchValue, setSearchValue] = useState([])
     const [editTitle, setEditTitle] = useState("")
     const [users, setUsers] = useState([])
+
+    const [seletedUser, setSelectedUser] = useState(0)
+    const [selectUserFromForm, setSelectUserFromForm] = useState(1)
+
     const [filterComments, setFilterComments] = useState("")
 
     const [showComponent, setShowComponent] = useState(false);
     const [open, setOpen] = useState(true)
 
-    const [openForm, setOpenForm] =  useState(false)
+    const [openForm, setOpenForm] = useState(false)
 
-    
+
     const [openCloseDrawer, setOpenCloseDrawer] = useState(false)
 
     // GET POST
@@ -69,22 +73,16 @@ export const PostProvider = ({ children }) => {
         )
     }
 
-
-    // let confirmation = confirm("Want to delete?");
-    // DELETE POST
-
-
-
     const removePost = async (id) => {
         try {
             // setShowComponent(true);
-                await deletePost(id)
-                setPosts((prev) => prev.filter((post) => post.id !== id));
+            await deletePost(id)
+            setPosts((prev) => prev.filter((post) => post.id !== id));
             setShowComponent(false);
             toast.success("Post Delete Successfully")
 
         } catch (error) {
-           toast.error("somthing went wronge")
+            toast.error("somthing went wronge")
         }
     }
 
@@ -98,7 +96,7 @@ export const PostProvider = ({ children }) => {
         fetchPosts();
         fetchUsers();
         fetchComments();
-    }, [])
+    }, [setSelectedUser])
 
     //PAGiNATION
     
@@ -131,16 +129,23 @@ export const PostProvider = ({ children }) => {
     }
 
     //SELECT USERS
-    const handleSelectUser = async(e) =>{
-        const res = await getUsersPost(e.target.value)
-        setPosts(res.data)
+    const handleSelectUser = async (value) => {
+        if (value === "All") {
+            const res = await getPosts()
+            setPosts(res.data)
+        } 
+        else {
+            const res = await getUsersPost(value)
+            setPosts(res.data)
+        }
+        setSelectedUser(value)
     }
 
     //FILTER COMMENTS
 
-    const handleFilterComments = async(id) => {
-const res = await getFilteredComments(id,filterComments)
-setComments(res.data)
+    const handleFilterComments = async (id) => {
+        const res = await getFilteredComments(id, filterComments)
+        setComments(res.data)
     }
 
     return (
@@ -183,7 +188,13 @@ setComments(res.data)
             openForm,
             setOpenForm,
             openCloseDrawer,
-            setOpenCloseDrawer
+            setOpenCloseDrawer,
+            setSelectedUser,
+            selectUserFromForm,
+            setSelectUserFromForm,
+            fetchPosts,
+            seletedUser
+
         }}>
             {children}
         </PostContext.Provider>

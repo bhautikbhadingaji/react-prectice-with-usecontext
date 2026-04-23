@@ -58,11 +58,11 @@ export const PostCards = () => {
                     <div key={post.id}
                         className="max-w-md mx-auto bg-green-200 shadow-lg rounded-xl p-5 mb-5">
                         <h2
-                            className="text-xl font-bold mb-2 text-gray-800 ml-4"
+                            className="text-xl font-bold mb-2 text-gray-800 ml-4 underline decoration-sky-500"
                             data-tooltip-id="title-tooltip"
                             data-tooltip-content={post.title}
                         >
-                            TITLE:{post.title.length <= 12 ? post.title : post.title.substring(0, 12) + ' ...'}
+                            TITLE : {post.title.length <= 12 ? post.title : post.title.substring(0, 12) + ' ...'}
                             <button>
                                 <RiEdit2Fill className="cursor-pointer inline-block ml-3"
                                     onClick={() => handleDrawerOpen("EditTitle", post)} />
@@ -70,7 +70,7 @@ export const PostCards = () => {
                         </h2>
 
                         <p className="bg-green-200 text-gray-500 px-4 py-2 rounded-lg hover:bg-green-300">
-                            BODY: {post.body.substring(0, 100) + ' ...'}
+                            BODY : {post.body.substring(0, 100) + ' ...'}
                         </p>
                         <button
                             className="text-blue-500 hover:text-blue-700 cursor-pointer"

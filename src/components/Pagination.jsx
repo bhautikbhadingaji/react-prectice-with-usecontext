@@ -15,6 +15,8 @@ export const Pagination = () => {
     const handlePrevBtn = useCallback(() => {
         if (currentPage > 1) {
             setCurrentPage(currentPage - 1)
+        }else{
+            toast.error("Can't To To Prev Page")
         }
     }, [
         currentPage
@@ -24,7 +26,7 @@ export const Pagination = () => {
         if (currentPage < totalPages) {
             setCurrentPage((prev) => prev + 1)
         } else {
-            toast.error("can't Go To Next Page")
+            toast.error("Can't Go To Next Page")
         }
     }, [
         currentPage, totalPages
